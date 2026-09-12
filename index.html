@@ -1,10 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Jacky's Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jacky | Professional Profile</title>
+    <style>
+        /* 文青 Aesthetic Styling */
+        body {
+            background-color: #faf9f6;
+            color: #4a4a4a;
+            font-family: 'Georgia', 'Noto Serif TC', serif;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 70px;
+            letter-spacing: 1px;
+        }
+        h1 {
+            font-weight: normal;
+            color: #2c2c2c;
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            letter-spacing: 4px;
+        }
+        h2 {
+            font-weight: normal;
+            color: #5a5a5a;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 50px;
+            border-top: 1px solid #e0dcd3;
+            padding-top: 30px;
+        }
+        .entry {
+            margin-bottom: 25px;
+        }
+        .entry h3 {
+            margin: 0 0 5px 0;
+            font-weight: normal;
+            color: #2c2c2c;
+        }
+        .entry p {
+            margin: 0;
+            font-size: 0.95em;
+            color: #666;
+        }
+        .special-access {
+            text-align: center;
+            margin-top: 80px;
+        }
+        .btn {
+            background-color: transparent;
+            border: 1px solid #8c8c8c;
+            padding: 12px 30px;
+            cursor: pointer;
+            color: #4a4a4a;
+            font-family: inherit;
+            letter-spacing: 2px;
+            font-size: 0.9em;
+            transition: all 0.4s ease;
+        }
+        .btn:hover {
+            background-color: #4a4a4a;
+            color: #faf9f6;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>Welcome to my new static website.</p>
+
+    <header>
+        <h1>Jacky</h1>
+        <p>Technology & Transformation</p>
+    </header>
+
+    <div class="section">
+        <h2>Experience</h2>
+        <div class="entry">
+            <h3>Deloitte</h3>
+            <p>Analyst, Technology & Transformation Financial Services</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Education</h2>
+        <div class="entry">
+            <h3>University of Warwick</h3>
+            <p>Master of Science in Finance and Economics</p>
+        </div>
+    </div>
+
+    <div class="special-access">
+        <button class="btn" onclick="accessSpecialPage()">Unlock Special Subpage</button>
+    </div>
+
+    <script>
+        function accessSpecialPage() {
+            // This is where you set your password
+            const password = prompt("Please enter the passphrase:");
+            
+            if (password === "secret123") { 
+                window.location.href = "special.html";
+            } else if (password !== null) {
+                alert("Incorrect passphrase. Please try again.");
+            }
+        }
+    </script>
+
 </body>
 </html>
