@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jacky | Special Collections</title>
+    <title>Jacky | Special Collections & Diary</title>
     <style>
+        /* 文青 Aesthetic Styling */
         body {
             background-color: #faf9f6;
             color: #4a4a4a;
@@ -13,39 +14,166 @@
             max-width: 700px;
             margin: 0 auto;
             padding: 60px 20px;
+        }
+        header {
             text-align: center;
+            margin-bottom: 50px;
         }
         h1 {
             font-weight: normal;
             color: #2c2c2c;
             letter-spacing: 3px;
-            margin-bottom: 40px;
+            margin-bottom: 10px;
         }
-        p {
+        p.subtitle {
             color: #666;
             margin-bottom: 30px;
         }
-        .back-link {
-            display: inline-block;
-            margin-top: 40px;
-            color: #8c8c8c;
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-bottom 0.3s;
+        .section {
+            margin-bottom: 50px;
+            border-top: 1px solid #e0dcd3;
+            padding-top: 30px;
         }
-        .back-link:hover {
-            border-bottom: 1px solid #8c8c8c;
+        h2 {
+            font-weight: normal;
+            color: #5a5a5a;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #e0dcd3;
+            color: #4a4a4a;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #8c8c8c;
+        }
+        .btn {
+            background-color: transparent;
+            border: 1px solid #8c8c8c;
+            padding: 8px 20px;
+            cursor: pointer;
+            color: #4a4a4a;
+            font-family: inherit;
+            letter-spacing: 1px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #4a4a4a;
+            color: #faf9f6;
+        }
+        .entry-card {
+            background-color: #fff;
+            border: 1px solid #e0dcd3;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .entry-date {
+            font-size: 0.85em;
+            color: #8c8c8c;
+            margin-bottom: 10px;
+            display: block;
+            letter-spacing: 1px;
+        }
+        .entry-text {
+            white-space: pre-wrap;
+            margin: 0;
         }
     </style>
 </head>
 <body>
 
-    <h1>Special Collections</h1>
-    <p>Welcome to the private subpage. You have successfully bypassed the lock.</p>
-    
-    <p>This space can be used to host your advanced Python backtesting frameworks, structural financial product analyses, or personal design projects.</p>
+    <header>
+        <h1>Special Collections</h1>
+        <p class="subtitle">Welcome to the private subpage.</p>
+    </header>
 
-    <a href="index.html" class="back-link">Return to Resume</a>
+    <div class="section">
+        <h2>Private Diary</h2>
+        <textarea id="diaryInput" placeholder="Write your thoughts here..."></textarea>
+        <button class="btn" onclick="saveEntry()">Save Entry</button>
+    </div>
 
+    <div class="section" id="diaryLogContainer" style="display: none;">
+        <h2>Past Entries</h2>
+        <div id="diaryEntries"></div>
+    </div>
+
+    <script>
+        // Load entries from browser storage when the page opens
+        document.addEventListener("DOMContentLoaded", loadEntries);
+
+        function saveEntry() {
+            const input = document.getElementById('diaryInput');
+            const text = input.value.trim();
+            
+            if (text === "") return;
+
+            // Create a new entry object with a timestamp
+            const newEntry = {
+                date: new Date().toLocaleString('en-GB'),
+                content: text
+            };
+
+            // Get existing entries from localStorage, or start a new array
+            let entries = JSON.parse(localStorage.getItem('myDiaryEntries')) || [];
+            
+            // Add new entry to the top (newest first)
+            entries.unshift(newEntry);
+            
+            // Save back to localStorage
+            localStorage.setItem('myDiaryEntries', JSON.stringify(entries));
+            
+            // Clear the textbox and refresh the display
+            input.value = "";
+            loadEntries();
+        }
+
+        function loadEntries() {
+            // Retrieve data from localStorage
+            const entries = JSON.parse(localStorage.getItem('myDiaryEntries')) || [];
+            const container = document.getElementById('diaryEntries');
+            const section = document.getElementById('diaryLogContainer');
+            
+            container.innerHTML = "";
+
+            if (entries.length > 0) {
+                section.style.display = "block";
+                
+                // Build the HTML for each saved entry
+                entries.forEach(entry => {
+                    const div = document.createElement('div');
+                    div.className = 'entry-card';
+                    
+                    const dateSpan = document.createElement('span');
+                    dateSpan.className = 'entry-date';
+                    dateSpan.textContent = entry.date;
+                    
+                    const textP = document.createElement('p');
+                    textP.className = 'entry-text';
+                    textP.textContent = entry.content;
+                    
+                    div.appendChild(dateSpan);
+                    div.appendChild(textP);
+                    container.appendChild(div);
+                });
+            } else {
+                section.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
